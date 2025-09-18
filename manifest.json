@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "Bilibili Ad Skipper",
+  "version": "1.0",
+  "description": "Skips ads in Bilibili videos by analyzing subtitles with AI",
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["*://*.bilibili.com/*"],
+      "js": ["content.js"]
+    }
+  ]
+}

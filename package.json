@@ -1,0 +1,35 @@
+{
+  "name": "bilibili-ad-skipper",
+  "version": "1.0.0",
+  "description": "Chrome extension to automatically skip ads in Bilibili videos using AI subtitle analysis",
+  "main": "content.js",
+  "scripts": {
+    "lint": "eslint content.js",
+    "lint:fix": "eslint content.js --fix",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "build": "echo 'Extension built successfully'",
+    "dev": "echo 'Development mode - load extension manually in Chrome'"
+  },
+  "keywords": [
+    "chrome-extension",
+    "bilibili",
+    "ad-skipper",
+    "ai",
+    "subtitles"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0"
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "collectCoverageFrom": [
+      "content.js"
+    ],
+    "setupFilesAfterEnv": []
+  }
+}
