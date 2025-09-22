@@ -1,5 +1,9 @@
 # Agent Guidelines for Bilibili Ad Skipper Chrome Extension
 
+## Project Management
+- **Read project plan**: read @PROJECT_PLAN.md and make sure it update
+- **Testing**: run test after code change 
+
 ## Build/Test Commands
 - **Load extension**: Open Chrome → Extensions → Load unpacked → Select project folder
 - **Test in browser**: Navigate to bilibili.com and check console for "Bilibili Ad Skipper loaded"

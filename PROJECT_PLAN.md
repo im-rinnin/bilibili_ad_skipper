@@ -3,20 +3,26 @@
 ## Project Overview
 A Chrome extension that automatically skips ads in Bilibili videos by analyzing subtitles with AI.
 
+**Current Demo:** Extension displays a "hello world" popup in the top right corner when loaded on bilibili.com, demonstrating basic content script injection and DOM manipulation.
+
 ## Current Status
 - ✅ Basic extension structure (manifest.json)
-- ✅ Content script placeholder (content.js with console log)
-- ❌ No actual functionality implemented yet
+- ✅ Content script with hello world popup demo
+- ✅ Development environment setup (package.json, ESLint, Jest)
+- ✅ Git repository initialized
+- ✅ Test directory renamed (fixed Chrome extension loading issue)
 
 ## Detailed Project Plan
 
-### Phase 1: Foundation Setup (Current)
+### Phase 1: Foundation Setup (✅ Complete)
 **Objective:** Establish development environment and basic structure
 - [x] Create manifest.json (v3)
 - [x] Set up content script injection
-- [ ] Add package.json for dependency management
-- [ ] Configure ESLint for code quality
-- [ ] Set up basic testing framework (Jest)
+- [x] Add package.json for dependency management
+- [x] Configure ESLint for code quality
+- [x] Set up basic testing framework (Jest)
+- [x] Initialize git repository
+- [x] Add hello world popup demo functionality
 
 ### Phase 2: Subtitle Fetching
 **Objective:** Extract subtitles from Bilibili videos
@@ -87,7 +93,8 @@ A Chrome extension that automatically skips ads in Bilibili videos by analyzing 
 - Implement proper error handling and user feedback
 
 ## Next Steps
-1. Set up development environment (package.json, linting)
-2. Research Bilibili subtitle APIs
-3. Implement basic subtitle fetching
+1. ✅ Phase 1 Complete - Development environment ready
+2. Begin Phase 2: Research Bilibili subtitle APIs
+3. Implement basic subtitle fetching logic
 4. Test on sample videos before AI integration
+5. Add more UI components and user feedback features
