@@ -7,6 +7,10 @@
     "activeTab",
     "storage"
   ],
+  "host_permissions": [
+    "https://api.bilibili.com/*",
+    "https://aisubtitle.hdslb.com/*"
+  ],
   "content_scripts": [
     {
       "matches": ["*://*.bilibili.com/*"],

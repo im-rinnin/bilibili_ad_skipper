@@ -11,9 +11,12 @@
 - Updated manifest.json with host_permissions for API access.
 - Implemented basic subtitle fetching in content.js: Extract bvid from URL, fetch view API for cid, fetch player API for subtitles, parse JSON.
 - Passed linting and tests.
+- Completed implementation of fetchPlayerInfo and fetchSubtitles functions.
+- Updated init() to fetch and log subtitle data on video pages.
 
 ## Current Tasks
-- Test subtitle fetching on sample Bilibili videos.
+- Test subtitle fetching on sample Bilibili videos (load extension in Chrome, navigate to video with subtitles).
+- Verify console logs show fetched subtitle data.
 - Begin Phase 3: Choose AI service for ad detection (e.g., OpenAI API).
 - Implement API key management in Chrome storage.
 
