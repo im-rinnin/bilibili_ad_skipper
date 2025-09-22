@@ -110,7 +110,7 @@ async function fetchPlayerInfo(aid, cid) {
 async function fetchSubtitles(subtitleUrl) {
   const fullUrl = subtitleUrl.startsWith('//') ? 'https:' + subtitleUrl : subtitleUrl;
   try {
-    const response = await fetch(fullUrl, { credentials: 'include' });
+    const response = await fetch(fullUrl);
     const data = await response.json();
     return data.body || [];
   } catch (error) {
