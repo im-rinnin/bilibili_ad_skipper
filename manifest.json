@@ -11,10 +11,13 @@
     "https://api.bilibili.com/*",
     "https://aisubtitle.hdslb.com/*"
   ],
+  "action": {
+    "default_popup": "popup.html"
+  },
   "content_scripts": [
     {
       "matches": ["*://*.bilibili.com/*"],
-      "js": ["content.js"]
+      "js": ["content.bundle.js"]
     }
   ]
 }

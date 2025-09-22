@@ -13,12 +13,34 @@
 - Passed linting and tests.
 - Completed implementation of fetchPlayerInfo and fetchSubtitles functions.
 - Updated init() to fetch and log subtitle data on video pages.
+- Chose Gemini 2.5 Flash for AI ad detection.
+- Added @google/genai dependency to package.json.
+- Integrated Gemini API in content.js for subtitle analysis with prompt engineering.
+- Implemented Chrome storage for API key management.
+- Updated Jest configuration for ES modules and mocked GoogleGenAI.
+- Passed lint and tests.
+- Refined AI prompt for better ad detection accuracy.
+- Updated ad logging to use {adstart_time:*,ad_endtime:*} format.
+- Added popup UI for API key input (popup.html, popup.js).
+- Updated manifest.json with action for popup.
+- Updated lint script to include popup.js.
+- Added console logging for full subtitles in analyzeSubtitles.
+- Changed initial console log to 'hello_im_ad_skipper'.
+- Fixed ES module import error by using dynamic import for @google/genai in analyzeSubtitles.
+- Added console logging for Gemini request prompt and response.
+- Added webpack bundling for content script to resolve module resolution in extension context.
+- Updated manifest.json to load content.bundle.js.
+- Updated build script to run webpack.
+- Added "[ad_skip]" prefix to all console.log statements for easy identification.
+- Updated webpack config with LimitChunkCountPlugin to force single bundle file, resolving ChunkLoadError.
+- Implemented ad skipping logic: monitor video timeupdate, skip to ad endTime when entering ad segment.
+- Fixed JSON parsing error by stripping markdown code blocks from Gemini response.
 
 ## Current Tasks
-- Test subtitle fetching on sample Bilibili videos (load extension in Chrome, navigate to video with subtitles).
-- Verify console logs show fetched subtitle data.
-- Begin Phase 3: Choose AI service for ad detection (e.g., OpenAI API).
-- Implement API key management in Chrome storage.
+- Test ad skipping on sample Bilibili videos with detected ads.
+- Verify video jumps over ad segments (e.g., from 723.53 to 790.28).
+- Monitor console for skipping logs.
+- Refine skipping logic if needed (e.g., handle multiple ads, user feedback).
 
 ## Session Synthesis
 **Key Points:**
