@@ -45,7 +45,8 @@ async function init() {
         const subtitleUrl = subtitles[0].subtitle_url;
         console.log('Fetching subtitle from URL:', subtitleUrl);
         const subtitleData = await fetchSubtitles(subtitleUrl);
-        console.log('Fetched subtitle data (first 5 entries):', subtitleData.slice(0, 5));
+        const parsedSubtitles = parseSubtitles(subtitleData);
+        console.log('Parsed subtitle data (first 5 entries):', parsedSubtitles.slice(0, 5));
         // TODO: Analyze subtitle data for ad detection
       } else {
         console.log('No subtitles available for this video. Check player API response for details.');
@@ -117,6 +118,14 @@ async function fetchSubtitles(subtitleUrl) {
     console.error('Error fetching subtitles:', error);
     return [];
   }
+}
+
+// Parse subtitle data to extract content and start time
+function parseSubtitles(subtitleData) {
+  return subtitleData.map(entry => ({
+    content: entry.content,
+    startTime: entry.from
+  }));
 }
 
 // TODO: Implement subtitle fetching, AI analysis, and ad skipping logic
