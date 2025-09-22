@@ -46,7 +46,7 @@ async function init() {
         console.log('Fetched subtitle data:', subtitleData.slice(0, 5)); // Log first 5 entries
         // TODO: Analyze subtitle data for ad detection
       } else {
-        console.log('No subtitles available for this video');
+        console.log('No subtitles available for this video. Check player API response for details.');
       }
     }
   }
@@ -90,7 +90,9 @@ async function fetchPlayerInfo(aid, cid) {
   try {
     const response = await fetch(url);
     const data = await response.json();
+    console.log('Player API response:', data);
     if (data.code === 0) {
+      console.log('Subtitle data:', data.data.subtitle);
       return data.data.subtitle.subtitles || [];
     } else {
       console.error('Failed to fetch player info:', data.message);
