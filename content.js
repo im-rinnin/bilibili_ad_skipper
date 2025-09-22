@@ -90,7 +90,7 @@ async function fetchVideoMetadata(bvid) {
 async function fetchPlayerInfo(aid, cid) {
   const url = `https://api.bilibili.com/x/player/wbi/v2?aid=${aid}&cid=${cid}`;
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, { credentials: 'include' });
     const data = await response.json();
     console.log('Player API response:', data);
     if (data.code === 0) {
@@ -110,7 +110,7 @@ async function fetchPlayerInfo(aid, cid) {
 async function fetchSubtitles(subtitleUrl) {
   const fullUrl = subtitleUrl.startsWith('//') ? 'https:' + subtitleUrl : subtitleUrl;
   try {
-    const response = await fetch(fullUrl);
+    const response = await fetch(fullUrl, { credentials: 'include' });
     const data = await response.json();
     return data.body || [];
   } catch (error) {
