@@ -14,8 +14,8 @@
 - **Language:** JavaScript (ES6+)
 - **Testing:** Jest with jsdom environment
 - **Linting:** ESLint
-- **Build:** Manual loading in Chrome for development
-- **AI Integration:** To be determined (OpenAI API, local model, etc.)
+- **Build:** Webpack bundling for production
+- **AI Integration:** Google Gemini 2.5 Flash API
 
 ## Key Decisions
 - Use Chrome Storage API for secure API key management
@@ -25,10 +25,10 @@
 
 ## Development Phases
 - Phase 1: Foundation Setup (Complete)
-- Phase 2: Subtitle Fetching (Next)
-- Phase 3: AI Integration
-- Phase 4: Ad Detection Logic
-- Phase 5: Video Skipping
-- Phase 6: User Interface
-- Phase 7: Testing & Polish
+- Phase 2: Subtitle Fetching (Complete)
+- Phase 3: AI Integration (Complete)
+- Phase 4: Ad Detection Logic (Complete)
+- Phase 5: Video Skipping (Complete)
+- Phase 6: User Interface (Basic popup added)
+- Phase 7: Testing & Polish (Next)
 - Phase 8: Deployment

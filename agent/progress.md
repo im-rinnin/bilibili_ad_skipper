@@ -35,12 +35,18 @@
 - Updated webpack config with LimitChunkCountPlugin to force single bundle file, resolving ChunkLoadError.
 - Implemented ad skipping logic: monitor video timeupdate, skip to ad endTime when entering ad segment.
 - Fixed JSON parsing error by stripping markdown code blocks from Gemini response.
+- Implemented debug mode: added checkbox in popup to enable/disable console logging, updated content.js to conditionally log only when debug is enabled.
+- Added ad skipping toggle: checkbox in popup to enable/disable auto-skipping, updated content.js to check setting before setting up video listener.
+- Fixed debugEnabled variable declaration and updated all logging to use conditional log() function.
+- Updated Jest test to mock chrome API and verify loading message.
 
 ## Current Tasks
 - Test ad skipping on sample Bilibili videos with detected ads.
 - Verify video jumps over ad segments (e.g., from 723.53 to 790.28).
 - Monitor console for skipping logs.
 - Refine skipping logic if needed (e.g., handle multiple ads, user feedback).
+- Test debug mode toggle: enable/disable logging in console.
+- Test ad skipping toggle: enable/disable auto-skipping functionality.
 
 ## Session Synthesis
 **Key Points:**

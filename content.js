@@ -1,7 +1,7 @@
 /* global chrome */
 // Content script for Bilibili Ad Skipper
 let adSegments = [];
-console.log('[ad_skip] hello_im_ad_skipper');
+let debugEnabled = false;
 
 // Create and display hello world popup in top right corner
 function showHelloWorldPopup() {
@@ -32,38 +32,43 @@ function showHelloWorldPopup() {
 
 // Main initialization
 async function init() {
+  debugEnabled = await getDebug();
+  log('Bilibili Ad Skipper loaded');
   showHelloWorldPopup();
 
   const bvid = extractBvid();
   if (bvid) {
-    console.log('[ad_skip] Detected video page, bvid:', bvid);
+    log('Detected video page, bvid: ' + bvid);
     const metadata = await fetchVideoMetadata(bvid);
     if (metadata) {
-      console.log('[ad_skip] Fetched metadata:', metadata);
+      log('Fetched metadata: ' + JSON.stringify(metadata));
       const subtitles = await fetchPlayerInfo(metadata.aid, metadata.cid);
       if (subtitles.length > 0) {
-        console.log('[ad_skip] Available subtitles:', subtitles);
+        log('Available subtitles: ' + JSON.stringify(subtitles));
         // Fetch the first subtitle (assuming Chinese AI subtitle)
         const subtitleUrl = subtitles[0].subtitle_url;
-        console.log('[ad_skip] Fetching subtitle from URL:', subtitleUrl);
+        log('Fetching subtitle from URL: ' + subtitleUrl);
         const subtitleData = await fetchSubtitles(subtitleUrl);
         const parsedSubtitles = parseSubtitles(subtitleData);
-        console.log('[ad_skip] Parsed subtitle data (first 5 entries):', parsedSubtitles.slice(0, 5));
+        log('Parsed subtitle data (first 5 entries): ' + JSON.stringify(parsedSubtitles.slice(0, 5)));
         await analyzeSubtitles(parsedSubtitles);
 
-        // Set up ad skipping
-        const video = document.querySelector('video');
-        if (video) {
-          video.addEventListener('timeupdate', () => {
-            const currentTime = video.currentTime;
-            for (const ad of adSegments) {
-              if (currentTime >= ad.startTime && currentTime < ad.endTime) {
-                console.log('[ad_skip] Skipping ad from', ad.startTime, 'to', ad.endTime);
-                video.currentTime = ad.endTime;
-                break;
+        // Set up ad skipping if enabled
+        const skipEnabled = await getSkipEnabled();
+        if (skipEnabled) {
+          const video = document.querySelector('video');
+          if (video) {
+            video.addEventListener('timeupdate', () => {
+              const currentTime = video.currentTime;
+              for (const ad of adSegments) {
+                if (currentTime >= ad.startTime && currentTime < ad.endTime) {
+                  log('Skipping ad from ' + ad.startTime + ' to ' + ad.endTime);
+                  video.currentTime = ad.endTime;
+                  break;
+                }
               }
-            }
-          });
+            });
+          }
         }
       } else {
         console.log('No subtitles available for this video. Check player API response for details.');
@@ -110,9 +115,9 @@ async function fetchPlayerInfo(aid, cid) {
   try {
     const response = await fetch(url, { credentials: 'include' });
     const data = await response.json();
-    console.log('[ad_skip] Player API response:', data);
+    log('Player API response: ' + JSON.stringify(data));
     if (data.code === 0) {
-      console.log('[ad_skip] Subtitle data:', data.data.subtitle);
+      log('Subtitle data: ' + JSON.stringify(data.data.subtitle));
       return data.data.subtitle.subtitles || [];
     } else {
       console.error('Failed to fetch player info:', data.message);
@@ -156,20 +161,20 @@ async function analyzeSubtitles(subtitles) {
   const { GoogleGenAI } = await import('@google/genai');
   const ai = new GoogleGenAI({ apiKey });
   const subtitleText = subtitles.map(s => `${s.startTime}: ${s.content}`).join('\n');
-  console.log('[ad_skip] Full subtitles:', subtitles);
+  log('Full subtitles: ' + JSON.stringify(subtitles));
   const prompt = `Analyze these video subtitles for advertisement segments. Look for content that promotes products, services, or brands; repetitive phrases; calls to action like 'buy now' or 'subscribe'; or non-story elements. Return a JSON array of objects, each with 'startTime' (number) and 'endTime' (number) for detected ad segments. If no ads, return []. Be precise and avoid false positives.\n\nSubtitles:\n${subtitleText}`;
-  console.log('[ad_skip] Gemini request prompt:', prompt);
+  log('Gemini request prompt: ' + prompt);
 
   try {
     const response = await ai.models.generateContent({
       model: 'gemini-2.5-flash',
       contents: prompt,
     });
-    console.log('[ad_skip] Gemini response:', response.text);
+    log('Gemini response: ' + response.text);
     const jsonString = response.text.replace(/```json\n?/, '').replace(/\n?```$/, '');
     const result = JSON.parse(jsonString);
     adSegments = result;
-    result.forEach(segment => console.log(`[ad_skip] {adstart_time:${segment.startTime},ad_endtime:${segment.endTime}}`));
+    result.forEach(segment => log(`Detected ad segment: start=${segment.startTime}, end=${segment.endTime}`));
   } catch (error) {
     console.error('Error analyzing subtitles:', error);
   }
@@ -182,4 +187,29 @@ async function getApiKey() {
       resolve(result.geminiApiKey);
     });
   });
+}
+
+// Get debug enabled from Chrome storage
+async function getDebug() {
+  return new Promise((resolve) => {
+    chrome.storage.sync.get(['debugEnabled'], (result) => {
+      resolve(result.debugEnabled || false);
+    });
+  });
+}
+
+// Get skip enabled from Chrome storage
+async function getSkipEnabled() {
+  return new Promise((resolve) => {
+    chrome.storage.sync.get(['skipEnabled'], (result) => {
+      resolve(result.skipEnabled !== false); // default true
+    });
+  });
+}
+
+// Debug log function
+function log(message) {
+  if (debugEnabled) {
+    console.log('[ad_skip] ' + message);
+  }
 }
